@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block body_content %}
+<h1>Wybory</h1>
+<ul>
+    {% for wybory in all_wybory %}
+        <li> <a href="/mainapp/{{ wybory.rodzaj_wyborow }}/">{{ wybory.rodzaj_wyborow }}</a>
+        <a href="/mainapp/{{ wybory.rodzaj_wyborow }}/raport">[Wyniki]</a>
+        </li>
+    {% endfor %}
+</ul>
+<br>
+<a href="/admin/login/">[Zaloguj się aby móc zagłosować]</a>
+{% endblock %}
+

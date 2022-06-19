@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block body_content %}
+{% if wyborca.wybory == wybory %}
+    {% if datetime_teraz > wybory.zakonczenie %}
+        <h1>Wybory {{ rodzaj_wyborow }} zakonczyly sie {{ wybory.zakonczenie }}</h1>
+        <a href="/mainapp/{{ wybory.rodzaj_wyborow }}/raport/">[Zobacz wyniki]</a>
+    {% elif datetime_teraz < wybory.rozpoczecie %}
+        <h1>Wybory {{ rodzaj_wyborow }} rozpoczna sie {{ wybory.rozpoczecie }} </h1>
+        <a href="/mainapp/home/">[Wroc do strony glownej]</a>
+    {% else %}
+        {% if wyborca.czy_uprawniony == True %}
+            {% if wyborca.czy_glosowal == False %}
+                <h1>Wybory {{ rodzaj_wyborow }}</h1>
+                <h2>Głosowanie </h2>
+                <form action="raport/" method="post">
+                    {% csrf_token %}
+                    {% for kandydat in wybory.kandydat_set.all %}
+                        <input type="radio" name="glos" id="glos" value="{{ kandydat.id }}">
+                        <label for="glos"> <a href="/mainapp/{{ rodzaj_wyborow }}/kandydat/{{ kandydat.pk }}/">{{ kandydat }}</a> </label> <br>
+                    {% endfor %}
+                    <br>
+                    <button type="submit">Oddaj glos</button>
+                </form>
+            {% else %}
+                <h1>Juz glosowales</h1>
+                <a href="/mainapp/{{ rodzaj_wyborow }}/raport/">[Zobacz raport]</a>
+            {% endif %}
+        {% else %}
+            <h1>Nie masz uprawnien do glosowania</h1>
+            <a href="/mainapp/home/">[Wroc do strony glownej]</a>
+        {% endif %}
+    {% endif %}
+{% else %}
+    <h1>Nie masz uprawnień do tego głosowania</h1>
+    <a href="/mainapp/home/">[Wroc do strony glownej]</a>
+{% endif %}
+{% endblock %}
+

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block body_content %}
+<h1>Profil kandydata</h1>
+<ul>
+    <li> Imie: {{ kandydat.imie }}</li>
+    <li> Nazwisko: {{ kandydat.nazwisko }}</li>
+    <li> Miejscowosc: {{ kandydat.miejscowosc }}</li>
+    <li> Wiek: {{ kandydat.wiek }}</li>
+    <li> Wybory: {{ rodzaj_wyborow }}</li>
+</ul>
+{% endblock %}
+

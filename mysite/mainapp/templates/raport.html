@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block body_content %}
+{% if  datetime_teraz < zakonczenie_glosowania  %}
+    <h1>Wybory {{ wybory.rodzaj_wyborow }}</h1>
+    <h2>Wyniki beda dostepne {{zakonczenie_glosowania}}</h2>
+    <a href="/mainapp/home/">[Wroc do strony glownej]</a>
+{% else %}
+    <h1>Wybory {{ wybory.rodzaj_wyborow }} zakonczyly sie {{zakonczenie_glosowania}}</h1>
+    <h2>Frekwencja: {{ raport.frekwencja }}</h2><br>
+    <h3>Wyniki:</h3>
+    {% for kandydat in wybory.kandydat_set.all %}
+        <ul>
+            <li><a href="/mainapp/{{ rodzaj_wyborow }}/kandydat/{{ kandydat.pk }}/">{{ kandydat }}</a> - {{ kandydat.poparcie }} </li>
+        </ul>
+    {% endfor %}
+    <br>
+    <a href="/mainapp/home/">[Wroc do strony glownej]</a>
+{% endif %}
+{% endblock %}
